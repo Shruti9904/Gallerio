@@ -9,7 +9,7 @@ import androidx.room.Query
 @Dao
 interface ArtworkDoa{
     @Query("SELECT * FROM 'artworks'")
-    suspend fun getAllSavedArtworks():List<ArtworkEntity>
+    suspend fun getAllArtworks():List<ArtworkEntity>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertArtwork(artwork: ArtworkEntity)

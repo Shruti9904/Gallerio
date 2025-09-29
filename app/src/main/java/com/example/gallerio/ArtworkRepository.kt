@@ -6,7 +6,7 @@ import com.example.gallerio.data.ArtworkEntity
 
 class ArtworkRepository(private val dao: ArtworkDoa) {
 
-    suspend fun getAllArtworks(): List<ArtworkEntity> = dao.getAllSavedArtworks()
+    suspend fun getAllArtworks(): List<ArtworkEntity> = dao.getAllArtworks()
 
     suspend fun insertArtwork(artwork: ArtworkEntity) = dao.insertArtwork(artwork)
 

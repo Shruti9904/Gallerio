@@ -10,7 +10,12 @@ data class Artwork(
     val artist_title: String?,
     val image_id: String?,
     val artist_display: String?,
-    val medium_display: String?
+    val medium_display: String?,
+    val date_display: String?,
+    val place_of_origin:String?,
+    val artwork_type_title: String?,
+    val style_title: String?,
+    val description: String?
 ) {
     fun toArtworkEntity(isSaved: Boolean = false): ArtworkEntity {
         return ArtworkEntity(
@@ -20,7 +25,12 @@ data class Artwork(
             artistTitle = artist_title,
             isSaved = isSaved,
             artistDisplay = artist_display,
-            mediumDisplay = medium_display
+            mediumDisplay = medium_display,
+            dateDisplay = date_display,
+            placeOfOrigin = place_of_origin,
+            artworkTypeTitle = artwork_type_title,
+            styleTitle = style_title,
+            description = description
         )
     }
 
@@ -34,7 +44,13 @@ data class ArtworkEntity(
     val imageId: String?,
     var isSaved: Boolean = false,
     var artistDisplay: String?,
-    var mediumDisplay: String?
+    var mediumDisplay: String?,
+    val dateDisplay: String?,
+    val placeOfOrigin:String?,
+    val artworkTypeTitle: String?,
+    val styleTitle: String?,
+    val description: String?
 )
 
 
+//place_of_origin artwork_type_title style_title description
