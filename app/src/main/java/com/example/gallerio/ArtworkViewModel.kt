@@ -122,9 +122,9 @@ class ArtworkViewModel(private val repository: ArtworkRepository) :ViewModel() {
             uiState = uiState.copy(
                 artworks = uiState.artworks.map {
                     if (it.id == updatedArtwork.id) updatedArtwork else it
-                }
+                },
+                savedArtworks = uiState.savedArtworks + updatedArtwork
             )
-            loadSavedArtworks()
         }
     }
 
@@ -136,16 +136,19 @@ class ArtworkViewModel(private val repository: ArtworkRepository) :ViewModel() {
             uiState = uiState.copy(
                 artworks = uiState.artworks.map {
                     if (it.id == updatedArtwork.id) updatedArtwork else it
+                },
+                savedArtworks = uiState.savedArtworks.filter {
+                    it.id != updatedArtwork.id
                 }
             )
-            loadSavedArtworks()
         }
     }
 
     fun clearSearch(){
         searchQuery = ""
         isSearchActive = false
-        uiState.searchResults = emptyList()
+        uiState = uiState.copy(searchResults = emptyList())
+
     }
 
     fun updateSearchActive(value:Boolean){

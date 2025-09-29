@@ -12,6 +12,7 @@ retrofit = "2.9.0"
 coil = "2.4.0"
 room = "2.7.1"
 coroutines = "1.8.0"
+hilt = "2.51.1"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -44,4 +45,5 @@ coroutines-android = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-androi
 android-application = { id = "com.android.application", version.ref = "agp" }
 kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 kotlin-compose = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
+hilt = { id = "com.google.dagger.hilt.android", version.ref = "hilt" }
 

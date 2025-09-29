@@ -1,12 +1,16 @@
 package com.example.gallerio
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.GridItemSpan
 import androidx.compose.foundation.lazy.grid.LazyGridState
@@ -17,7 +21,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.CollectionsBookmark
 import androidx.compose.material.icons.filled.Home
-import androidx.compose.material.icons.filled.Person
+import androidx.compose.material.icons.filled.ImageSearch
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
@@ -33,12 +37,17 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import coil.compose.AsyncImage
 import com.example.gallerio.data.ArtworkEntity
+import com.example.gallerio.ui.theme.darkGrey
+import com.example.gallerio.ui.theme.gridBg
+import com.example.gallerio.ui.theme.softPink
 
 sealed class BottomNavItem(val label: String, val route: String, val icon: ImageVector) {
     object Home : BottomNavItem("Home", "home", Icons.Default.Home)
@@ -51,6 +60,9 @@ fun HomeScreen(viewModel: ArtworkViewModel, navHostController: NavHostController
     val artworks = viewModel.uiState.artworks
     val listState = rememberLazyGridState()
 
+
+
+
     LaunchedEffect(listState) {
         snapshotFlow { listState.layoutInfo.visibleItemsInfo.lastOrNull()?.index }
             .collect { lastVisibleItemIndex ->
@@ -61,12 +73,28 @@ fun HomeScreen(viewModel: ArtworkViewModel, navHostController: NavHostController
             }
     }
 
-    ArtworkGrid(
-        artworks = artworks,
-        isLoading = viewModel.isLoading,
-        listState = listState,
-        onItemClick = { art -> navHostController.navigate("detail/${art.id}") }
-    )
+    Column {
+        Box(
+            Modifier.fillMaxWidth().background(darkGrey)
+        ){
+            Text(
+                text = "Gallerio",
+                modifier = Modifier.fillMaxWidth().padding(top=16.dp, bottom = 16.dp, start = 16.dp),
+                fontSize = 26.sp,
+                fontWeight = FontWeight.Bold,
+                fontStyle = FontStyle.Italic,
+                color = softPink
+            )
+        }
+
+        ArtworkGrid(
+            artworks = artworks,
+            isLoading = viewModel.isLoading,
+            listState = listState,
+            onItemClick = { art -> navHostController.navigate("detail/${art.id}") }
+        )
+    }
+
 }
 
 
@@ -83,7 +111,7 @@ fun ArtworkGrid(
         state = listState,
         modifier = Modifier
             .fillMaxSize()
-            .padding(8.dp)
+            .background(gridBg)
     ) {
         items(artworks.size) { index ->
             val art = artworks[index]
@@ -109,7 +137,7 @@ fun ArtworkGrid(
 fun SingleArtwork(art: ArtworkEntity, onCardClick: () -> Unit) {
     val imageUrl = "https://www.artic.edu/iiif/2/${art.imageId}/full/843,/0/default.jpg"
     Card(
-        modifier = Modifier
+        modifier = Modifier.background(gridBg)
             .padding(8.dp)
             .fillMaxWidth()
             .clickable { onCardClick() },
@@ -134,13 +162,20 @@ fun SearchScreen(viewModel: ArtworkViewModel, navHostController: NavHostControll
     val searchResults = viewModel.uiState.searchResults
 
     Column(
-//        modifier = Modifier.padding(vertical = 16.dp, horizontal = 8.dp)
-    ) {
-        Text(
-            "Search", fontSize = 20.sp, fontWeight = FontWeight.Bold,
-            modifier = Modifier.padding(top = 16.dp, end = 16.dp, start = 16.dp)
-        )
+        modifier = Modifier.background(gridBg).fillMaxSize()
+    ){
 
+        Box(
+            Modifier.fillMaxWidth().background(darkGrey)
+        ){
+            Text(
+                text = "Find Art",
+                modifier = Modifier.fillMaxWidth().padding(top=16.dp, bottom = 16.dp, start = 16.dp),
+                fontSize = 20.sp,
+                fontWeight = FontWeight.Bold,
+                color = softPink
+            )
+        }
         SearchBar(
             query = query,
             onQueryChange = { viewModel.updateQuery(it) },
@@ -164,7 +199,9 @@ fun SearchScreen(viewModel: ArtworkViewModel, navHostController: NavHostControll
                 )
             },
             modifier = Modifier.padding(horizontal = 8.dp)
-        ) {}
+        ) {
+
+        }
 
         if (query.isNotBlank()) {
             when {
@@ -195,6 +232,26 @@ fun SearchScreen(viewModel: ArtworkViewModel, navHostController: NavHostControll
                     )
                 }
             }
+        }else{
+            Box(contentAlignment = Alignment.Center, modifier = Modifier.fillMaxSize()){
+                Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                    Icon(
+                        imageVector = Icons.Default.ImageSearch,
+                        contentDescription = null,
+                        tint = softPink,
+                        modifier = Modifier.size(64.dp)
+                    )
+                    Spacer(modifier = Modifier.height(8.dp))
+                    Text(
+                        text = "Find your next favorite artwork",
+                        color = softPink,
+                        fontSize = 16.sp,
+                        textAlign = TextAlign.Center,
+                        fontStyle = FontStyle.Italic
+                    )
+                }
+            }
+
         }
 
     }

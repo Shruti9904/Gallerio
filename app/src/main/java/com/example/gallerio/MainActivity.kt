@@ -6,16 +6,19 @@ import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
+import androidx.compose.material3.NavigationBarItemDefaults
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Brush
+import androidx.compose.ui.graphics.Color
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.compose.NavHost
@@ -25,6 +28,8 @@ import androidx.navigation.compose.rememberNavController
 import androidx.room.Room
 import com.example.gallerio.data.AppDatabase
 import com.example.gallerio.ui.theme.GallerioTheme
+import com.example.gallerio.ui.theme.darkGrey
+import com.example.gallerio.ui.theme.softPink
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -39,16 +44,15 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             GallerioTheme {
-                Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    Gallerio(innerPadding, viewModel = artworkViewModel)
-                }
+                Gallerio( viewModel = artworkViewModel)
             }
         }
     }
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun Gallerio(innerPaddingValues: PaddingValues,viewModel: ArtworkViewModel) {
+fun Gallerio(viewModel: ArtworkViewModel) {
     val navController = rememberNavController()
 
     val items = listOf(
@@ -60,10 +64,14 @@ fun Gallerio(innerPaddingValues: PaddingValues,viewModel: ArtworkViewModel) {
     val currentBackStackEntry = navController.currentBackStackEntryAsState().value
     val currentRoute = currentBackStackEntry?.destination?.route
 
+
     Scaffold(
         bottomBar = {
             if (currentRoute != null && currentRoute in items.map { it.route }) {
-                NavigationBar {
+                NavigationBar (
+                    containerColor = darkGrey,
+                    contentColor = softPink
+                ){
                     items.forEach { item ->
                         NavigationBarItem(
                             selected = currentRoute == item.route,
@@ -76,12 +84,18 @@ fun Gallerio(innerPaddingValues: PaddingValues,viewModel: ArtworkViewModel) {
                                 }
                             },
                             icon = { Icon(item.icon, contentDescription = item.label) },
-                            label = { Text(item.label) }
+                            label = { Text(item.label) },
+                            colors = NavigationBarItemDefaults.colors(
+                                selectedIconColor = softPink,
+                                unselectedIconColor = softPink,
+                                indicatorColor = Color(0xFFFF80AB).copy(alpha = 0.2f)
+                            )
                         )
                     }
                 }
             }
-        }
+        },
+        modifier = Modifier.fillMaxSize()
     ) { innerPadding ->
         NavHost(
             navController,
