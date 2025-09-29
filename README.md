@@ -12,7 +12,7 @@ Gallerio is an Android app that lets users explore, search, and save artworks fr
   - Medium, Type, Style
   - Description
 - Share Artwork: Share artwork links with via any app.
-- Modern Dark UI: Soft pink accent colors, stylish top & bottom bars, smooth scrolling, and card-based layout.
+- Offline Support: Cached artworks available without internet.
 
 ## Screenshots
 
