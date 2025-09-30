@@ -16,9 +16,9 @@ Gallerio is an Android app that lets users explore, search, and save artworks fr
 
 ## Screenshots
 
-<img width="800" height="600" alt="1" src="https://github.com/user-attachments/assets/784e8694-e59b-45c1-b35a-28c35cf460e6" />
-<img width="800" height="600" alt="2" src="https://github.com/user-attachments/assets/65226b0a-830b-4b0a-81b0-c83e2f15259b" />
-<img width="800" height="600" alt="3" src="https://github.com/user-attachments/assets/1cf95812-2b99-43c1-8e62-1c026b01d6b3" />
+<img width="800" height="600" alt="1" src="https://github.com/user-attachments/assets/0697fe66-e066-4049-a971-4cca43477cad" />
+<img width="800" height="600" alt="2" src="https://github.com/user-attachments/assets/2fc40401-c81e-467d-8396-9c799eed8222" />
+<img width="800" height="600" alt="3" src="https://github.com/user-attachments/assets/c712fe8b-d4df-4c36-b1ec-e8e730bcfd33" />
 
 ## Tech Stack
 - Language: Kotlin
